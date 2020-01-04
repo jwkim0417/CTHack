@@ -7,12 +7,13 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxUtils;
 import java.util.Collection;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.ext.JGraphXAdapter;
 
-public class FSMGraph extends JFrame {
+public class FSMGraph extends JPanel {
     public FSMGraph()
     {
         JGraphXAdapter<String, DefaultEdge> jgxAdapter;
@@ -39,19 +40,22 @@ public class FSMGraph extends JFrame {
         System.out.println(cells);
         mxUtils.setCellStyles(graphComponent.getGraph().getModel(),
                 cells.toArray(), mxConstants.STYLE_ENDARROW, mxConstants.NONE);
-        getContentPane().add(graphComponent);
+        add(graphComponent);
 
         mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
         layout.execute(jgxAdapter.getDefaultParent());
 
     }
+    /*
     public static void main(String[] args) {
 
         FSMGraph g = new FSMGraph();
-
-//        g.setTitle(" undirected graph ");
-//        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        g.pack();
-//        g.setVisible(true);
+        
+        g.setTitle(" undirected graph ");
+        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        g.pack();
+        g.setVisible(true);
+        
     }
+    */
 }
