@@ -22,10 +22,21 @@ import javax.swing.border.Border;
  */
 public class left_bg extends JPanel {
     private BufferedImage image;
-
+    Integer x,y;
+    Boolean move;
     public left_bg(){
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
+        x=-180;
+        y=-200;
+        move=false;
+    }
+    
+    public void startmove(){
+        move=true;
+    }
+    public void endmove(){
+        move=false;
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -42,6 +53,8 @@ public class left_bg extends JPanel {
         Graphics2D grph = (Graphics2D) bi.getGraphics();
         grph.scale(2, 2);
         super.paintComponent(g);
-        g.drawImage(image, -180, -200, null);
+        if(move) x++;
+        g.drawImage(image, x, y, null);
+        repaint();
     }
 }

@@ -5,6 +5,9 @@ package com.CTGUI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.CTGUI.Controller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author kimsj0302
@@ -16,6 +19,11 @@ public class Ct_Frame extends javax.swing.JFrame {
      */
     public Ct_Frame() {
         initComponents();
+        cont = new Controller();
+        cont.set_rb(right_bg1);
+        cont.set_lb(left_bg2);
+        cont.set_rp(right_player1);
+        cont.set_lp(left_player1);
     }
 
     /**
@@ -34,8 +42,9 @@ public class Ct_Frame extends javax.swing.JFrame {
         right_player1 = new com.CTGUI.right_player();
         left_bg2 = new com.CTGUI.left_bg();
         left_player1 = new com.CTGUI.left_player();
-        fSMGraph3 = new com.CTGUI.FSMGraph();
         fSMGraph2 = new com.CTGUI.FSMGraph();
+        fSMGraph3 = new com.CTGUI.FSMGraph();
+        resultBoard1 = new com.CTGUI.ResultBoard();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -44,6 +53,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,11 +75,11 @@ public class Ct_Frame extends javax.swing.JFrame {
         right_player1.setLayout(right_player1Layout);
         right_player1Layout.setHorizontalGroup(
             right_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+            .addGap(0, 291, Short.MAX_VALUE)
         );
         right_player1Layout.setVerticalGroup(
             right_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout right_bg1Layout = new javax.swing.GroupLayout(right_bg1);
@@ -77,16 +87,16 @@ public class Ct_Frame extends javax.swing.JFrame {
         right_bg1Layout.setHorizontalGroup(
             right_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(right_bg1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(54, 54, 54)
                 .addComponent(right_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         right_bg1Layout.setVerticalGroup(
             right_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(right_bg1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(31, 31, 31)
                 .addComponent(right_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         left_player1.init();
@@ -107,9 +117,9 @@ public class Ct_Frame extends javax.swing.JFrame {
         left_bg2Layout.setHorizontalGroup(
             left_bg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(left_bg2Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(47, 47, 47)
                 .addComponent(left_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         left_bg2Layout.setVerticalGroup(
             left_bg2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,20 +134,20 @@ public class Ct_Frame extends javax.swing.JFrame {
         bg_layer2Layout.setHorizontalGroup(
             bg_layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bg_layer2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addComponent(left_bg2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                 .addComponent(right_bg1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
         bg_layer2Layout.setVerticalGroup(
             bg_layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bg_layer2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(75, 75, 75)
                 .addGroup(bg_layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(left_bg2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(right_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -179,7 +189,16 @@ public class Ct_Frame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("command");
+
+        jMenuItem6.setText("c-c");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -191,23 +210,29 @@ public class Ct_Frame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(fSMGraph2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 587, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(fSMGraph3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(246, 246, 246))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bg_layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(resultBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 1127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(bg_layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bg_layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(fSMGraph2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bg_layer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resultBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fSMGraph2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -229,6 +254,14 @@ public class Ct_Frame extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         left_player1.init();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            cont.command(true, true);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,7 +289,6 @@ public class Ct_Frame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Ct_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -264,7 +296,7 @@ public class Ct_Frame extends javax.swing.JFrame {
             }
         });
     }
-
+    private Controller cont;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.CTGUI.bg_layer bg_layer2;
     private com.CTGUI.FSMGraph fSMGraph1;
@@ -278,9 +310,11 @@ public class Ct_Frame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private com.CTGUI.left_bg left_bg2;
     private com.CTGUI.left_player left_player1;
+    private com.CTGUI.ResultBoard resultBoard1;
     private com.CTGUI.right_bg right_bg1;
     private com.CTGUI.right_player right_player1;
     // End of variables declaration//GEN-END:variables
