@@ -37,6 +37,7 @@ public class Ct_Frame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         fSMGraph1 = new com.CTGUI.FSMGraph();
+        scoreBoard1 = new com.CTGUI.ScoreBoard();
         bg_layer2 = new com.CTGUI.bg_layer();
         right_bg1 = new com.CTGUI.right_bg();
         right_player1 = new com.CTGUI.right_player();
@@ -143,7 +144,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         bg_layer2Layout.setVerticalGroup(
             bg_layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bg_layer2Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(20, 20, 20)
                 .addGroup(bg_layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(left_bg2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(right_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -221,17 +222,23 @@ public class Ct_Frame extends javax.swing.JFrame {
                         .addComponent(resultBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 1127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(bg_layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scoreBoard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(scoreBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bg_layer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resultBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                     .addComponent(fSMGraph2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -317,5 +324,6 @@ public class Ct_Frame extends javax.swing.JFrame {
     private com.CTGUI.ResultBoard resultBoard1;
     private com.CTGUI.right_bg right_bg1;
     private com.CTGUI.right_player right_player1;
+    private com.CTGUI.ScoreBoard scoreBoard1;
     // End of variables declaration//GEN-END:variables
 }
