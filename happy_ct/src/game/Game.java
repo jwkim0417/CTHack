@@ -66,15 +66,18 @@ class Game{
             this.player.addScore(300);
             this.boss.addScore(300);
             result.append("C C ");
-        }else if(!(this.player.getAction()) && this.boss.getAction()){
+        }
+        if(!(this.player.getAction()) && this.boss.getAction()){
             this.player.addScore(400);
             this.boss.addScore(-200);
             result.append("B C ");
-        }else if(this.player.getAction() && !(this.boss.getAction())){
+        }
+        if(this.player.getAction() && !(this.boss.getAction())){
             this.player.addScore(-200);
             this.boss.addScore(400);
             result.append("C B ");
-        }else{
+        }
+        if(!(this.player.getAction()) && !(this.boss.getAction())){
             this.player.addScore(-300);
             this.boss.addScore(-300);
             result.append("B B ");
@@ -82,8 +85,11 @@ class Game{
         System.out.print(result.toString() + Integer.toString(this.boss.getCurrentID())+"\n");
 
         /* Move Next State */
-        this.player.moveNextState(this.boss.getAction());
-        this.boss.moveNextState(this.player.getAction());
+        boolean current_boss = this.boss.getAction();
+        boolean current_player = this.player.getAction();
+
+        this.player.moveNextState(current_boss);
+        this.boss.moveNextState(current_player);
         
         /* File Write */
         this.bs.write(result.toString().getBytes());
