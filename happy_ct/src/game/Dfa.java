@@ -19,11 +19,11 @@ class State{
 
 public class Dfa{
     ArrayList<State> states;
-    String src; // src file path
 
     /* constructor */
     public Dfa(String src){
         this.states = new ArrayList<State>();
+
         try{
             setDfa(src);
         } catch(Exception e){
@@ -34,6 +34,7 @@ public class Dfa{
     /* DFA initialization */
     public void setDfa(String src) throws IOException{
         BufferedReader br = null;
+        
         br = new BufferedReader(new FileReader(src));
         while(true){
             String line = br.readLine();
@@ -41,13 +42,13 @@ public class Dfa{
 
             /*create a state*/
             State state = null;
-            int B_arc = Integer.valueOf(line.substring(2, 3));
-            int C_arc = Integer.valueOf(line.substring(4, 5));
+            int C_arc = Integer.valueOf(line.substring(2, 3));
+            int B_arc = Integer.valueOf(line.substring(4, 5));
 
             if(line.charAt(0) == '1'){
-                state = new State(true, B_arc, C_arc);
-            }else{
-                state = new State(false, B_arc, C_arc);
+                state = new State(true, C_arc, B_arc);
+            }else if(line.charAt(0) == '0'){
+                state = new State(false, C_arc, B_arc);
             }
             this.states.add(state);
 
@@ -64,7 +65,17 @@ public class Dfa{
         if(action){
             return this.states.get(currentID).C_arc;
         }else{
+            //System.out.println(this.states.get(currentID).B_arc);
             return this.states.get(currentID).B_arc;
+        }
+    }
+    public void printAll(){
+        for(int i=0; i < this.states.size(); i++){
+            System.out.print(states.get(i).Action);
+            System.out.print(states.get(i).C_arc);
+            System.out.print(states.get(i).B_arc);
+            System.out.print("\n");
+
         }
     }
 

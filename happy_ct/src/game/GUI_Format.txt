@@ -1,5 +1,0 @@
-player라는 클래스가 있음.
-거기에 current state라는 int형이 있음.
-그곳에서 current state에 대한 정보를 읽을 수 있음.
-
-점수 역시 player라는 클래스에서 score라는 int형에서 값을 알 수 있음.
