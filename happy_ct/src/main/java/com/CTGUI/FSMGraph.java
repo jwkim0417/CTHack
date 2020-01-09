@@ -19,7 +19,6 @@ public class FSMGraph extends JPanel {
     private JGraphXAdapter<FSMCell, FSMEdge> jgxAdapter;
     private DefaultDirectedGraph<FSMCell, FSMEdge> graph;
     private int currentId;
-    private int startId;
     private ArrayList<FSMCell> fsmCells;
     private ArrayList<FSMEdge> fsmEdges;
     private mxGraphComponent graphComponent;
@@ -124,10 +123,6 @@ public class FSMGraph extends JPanel {
         String[] g = attr.split("\n");
 
         for (int i = 1; i < g.length + 1; i++) {
-            if (i == 1) {
-                FSMCell c = new FSMCell(i, g[i - 1].split(" ")[0].equals("1"));
-                startId = 1;
-            }
             fsmCells.add(new FSMCell(i, g[i - 1].split(" ")[0].equals("1")));
         }
 
