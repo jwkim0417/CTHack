@@ -7,7 +7,6 @@ package com.CTGUI;
 
 import java.awt.Dimension;
 
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
@@ -70,7 +69,7 @@ public class ResultBoard extends JPanel {
         this.add(this.Player);
         this.add(this.Boss);
         
-        this.setPreferredSize(new Dimension(1000, 200));
+        this.setPreferredSize(new Dimension(1000, 150));
         RecordResult(5, true, false);
       
     }
