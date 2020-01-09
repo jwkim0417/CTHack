@@ -45,8 +45,6 @@ public class ScoreBoard extends JPanel{
         this.BossScore = new JLabel("Boss Score");
         this.BossScore.setFont(new Font("Serif", Font.PLAIN, 30));
         
-        System.out.println("eroror\n\n\n\n");
-        
         /* Layout */
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(Box.createHorizontalGlue());

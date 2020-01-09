@@ -8,7 +8,14 @@ import com.mxgraph.util.*;
 import com.mxgraph.util.mxStyleUtils;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JPanel;
 
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -25,8 +32,8 @@ public class FSMGraph extends JPanel {
     private Collection<Object> cells;
     private ArrayList<Object> cellsArray;
 
-    private final String attr2 = "1 2 6\n1 3 7\n1 4 8\n1 5 9\n1 6 10\n0 1 7\n0 2 8\n0 3 9\n0 4 10\n0 5 10";
-    private final String attr = "1 2 4\n1 3 5\n1 3 6\n0 1 5\n0 2 6\n0 3 6";
+    private final String attr2 = "1 1 5\r\n1 2 6\r\n1 3 7\r\n1 4 8\r\n1 5 9\r\n0 0 6\r\n0 1 7\r\n0 2 8\r\n0 3 9\r\n0 4 9";
+    private final String attr = "1 1 3\r\n1 2 4\r\n1 2 5\r\n0 0 4\r\n0 1 5\r\n0 2 5";
 
     public FSMGraph() {
         graph = new DefaultDirectedGraph<>(FSMEdge.class);
@@ -113,14 +120,26 @@ public class FSMGraph extends JPanel {
     }
 
     public void setGraph(String attr) {
-        if (attr == null)
-            return;
-
+        String content = null;
+        if (attr == null) {
+            content = this.attr;
+        }
+        else {
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(new File(attr)));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FSMGraph.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            content = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+        }
+        System.out.println(content);
+        
         graph = new DefaultDirectedGraph<>(FSMEdge.class);
         fsmCells.clear();
         fsmEdges.clear();
 
-        String[] g = attr.split("\n");
+        String[] g = content.split("\r\n");
 
         for (int i = 1; i < g.length + 1; i++) {
             fsmCells.add(new FSMCell(i, g[i - 1].split(" ")[0].equals("1")));
@@ -134,17 +153,16 @@ public class FSMGraph extends JPanel {
         for (int i = 1; i < g.length + 1; i++) {
             String[] tmp = g[i - 1].split(" ");
             int source = fsmCells.get(i - 1).id;
-            int target1 = fsmCells.get(Integer.parseInt(tmp[1]) - 1).id;
-            int target2 = fsmCells.get(Integer.parseInt(tmp[2]) - 1).id;
+            int target1 = fsmCells.get(Integer.parseInt(tmp[1])).id;
+            int target2 = fsmCells.get(Integer.parseInt(tmp[2])).id;
             FSMEdge e1 = new FSMEdge(++j, true, source, target1);
             FSMEdge e2 = new FSMEdge(++j, false, source, target2);
             fsmEdges.add(e1);
             fsmEdges.add(e2);
-            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[1]) - 1), e1);
-            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[2]) - 1), e2);
+            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[1])), e1);
+            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[2])), e2);
         }
 
-        rePaint();
         setCurrent(1);
     }
 

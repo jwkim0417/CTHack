@@ -1,3 +1,5 @@
+package com.game;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,37 +10,7 @@ import java.io.IOException;
 // 
 /*******************/
 
-class Player{
-    Dfa dfa;
-    int current_stateID;
-    int score;
-
-    public Player(String dfa_path){
-        this.dfa = new Dfa(dfa_path);
-        this.current_stateID = 0;
-        this.score = 0;
-        this.dfa.printAll();
-    }
-
-    public boolean getAction(){
-        return this.dfa.getAction(this.current_stateID);
-    }
-    public void addScore(int score){
-        this.score += score;
-    }
-    public int getScore(){
-        return this.score;
-    }
-    public void moveNextState(boolean action){
-       this.current_stateID = this.dfa.getNextState(this.current_stateID, action);
-    }
-    public int getCurrentID(){
-        return this.current_stateID;
-    }
-}
-
-
-class Game{
+public class Game{
     int NumOfTurn;
 
     Player player;
@@ -90,6 +62,7 @@ class Game{
 
         this.player.moveNextState(current_boss);
         this.boss.moveNextState(current_player);
+       
         
         /* File Write */
         this.bs.write(result.toString().getBytes());
@@ -101,34 +74,12 @@ class Game{
         this.bs.write(final_score.getBytes());
         this.bs.close();
     }
-
-}
-
-/* class which has the 'main' method */
-class Play{
-    public static void main(String[] argv){
-        Game game = null;
-        try {
-            game = new Game(argv[0], argv[1], argv[2], Integer.valueOf(argv[3]));
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        for(int i = 0; i < Integer.valueOf(argv[3]); i++){
-            try{
-                game.play();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        
-        try{
-            game.EndGame();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        
-        
+    
+    public Player getPlayer() {
+        return this.player;
+    }
+    
+    public Player getBoss() {
+        return this.boss;
     }
 }
