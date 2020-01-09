@@ -1,0 +1,11 @@
+B B
+C B
+C B
+C B
+C B
+C B
+C B
+C B
+C B
+C B
+-2100 3300

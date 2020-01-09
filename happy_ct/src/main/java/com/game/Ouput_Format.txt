@@ -1,0 +1,15 @@
+Group: B
+N-th trial
+Battle A
+(C, B)
+(B, C)
+(C, C)
+...
+
+score: (500, 150)
+Battle B
+(B, B)
+(C, C)
+(B, B)
+...
+score: (400, 200)
