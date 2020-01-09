@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7ac9e58-61d6-4a40-a5fd-0fa4edf16498" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/happy_ct.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CTGUI/FSMGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CTGUI/FSMGraph.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,6 +100,11 @@
       <workItem from="1578140456136" duration="7781000" />
       <workItem from="1578207318233" duration="12148000" />
       <workItem from="1578285320528" duration="12451000" />
+      <workItem from="1578309979535" duration="11000" />
+      <workItem from="1578480383917" duration="9812000" />
+      <workItem from="1578547461560" duration="119000" />
+      <workItem from="1578559455672" duration="18000" />
+      <workItem from="1578571123139" duration="5962000" />
     </task>
     <servers />
   </component>
