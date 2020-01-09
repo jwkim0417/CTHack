@@ -37,10 +37,7 @@ public class FSMGraph extends JPanel {
         mxGraphComponent graphComponent = new mxGraphComponent(jgxAdapter);
         add(graphComponent);
 
-        setGraph(attr);
-        setCurrent(4);
-        setCurrent(1);
-        setCurrent(4);
+        setGraph(null);
 
         setBackground(Color.WHITE);
 
