@@ -1,5 +1,3 @@
-package com.game;
-
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,12 +15,13 @@ class Player{
 
     public Player(String dfa_path){
         this.dfa = new Dfa(dfa_path);
-        current_stateID = 0;
-        score = 0;
+        this.current_stateID = 0;
+        this.score = 0;
+        this.dfa.printAll();
     }
 
     public boolean getAction(){
-        return this.dfa.getAction(current_stateID);
+        return this.dfa.getAction(this.current_stateID);
     }
     public void addScore(int score){
         this.score += score;
@@ -31,12 +30,15 @@ class Player{
         return this.score;
     }
     public void moveNextState(boolean action){
-       current_stateID = this.dfa.getNextState(current_stateID, action);
+       this.current_stateID = this.dfa.getNextState(this.current_stateID, action);
+    }
+    public int getCurrentID(){
+        return this.current_stateID;
     }
 }
 
 
-public class Game{
+class Game{
     int NumOfTurn;
 
     Player player;
@@ -46,8 +48,9 @@ public class Game{
 
     /* Constructor */
     public Game(String boss, String player, String output, int NumOfTurn) throws IOException{
-        this.player = new Player(player);
         this.boss = new Player(boss);
+
+        this.player = new Player(player);
 
         this.bs = new BufferedOutputStream(new FileOutputStream(output));
 
@@ -62,25 +65,31 @@ public class Game{
         if(this.player.getAction() && this.boss.getAction()){ // C - C
             this.player.addScore(300);
             this.boss.addScore(300);
-            result.append("C C\n");
-        }else if(!this.player.getAction() && this.boss.getAction()){
+            result.append("C C ");
+        }
+        if(!(this.player.getAction()) && this.boss.getAction()){
             this.player.addScore(400);
             this.boss.addScore(-200);
-            result.append("B C\n");
-        }else if(this.player.getAction() && !this.boss.getAction()){
+            result.append("B C ");
+        }
+        if(this.player.getAction() && !(this.boss.getAction())){
             this.player.addScore(-200);
             this.boss.addScore(400);
-            result.append("C B\n");
-        }else{
+            result.append("C B ");
+        }
+        if(!(this.player.getAction()) && !(this.boss.getAction())){
             this.player.addScore(-300);
             this.boss.addScore(-300);
-            result.append("B B\n");
+            result.append("B B ");
         }
-        System.out.print(result.toString());
+        System.out.print(result.toString() + Integer.toString(this.boss.getCurrentID())+"\n");
 
         /* Move Next State */
-        this.player.moveNextState(this.boss.getAction());
-        this.boss.moveNextState(this.player.getAction());
+        boolean current_boss = this.boss.getAction();
+        boolean current_player = this.player.getAction();
+
+        this.player.moveNextState(current_boss);
+        this.boss.moveNextState(current_player);
         
         /* File Write */
         this.bs.write(result.toString().getBytes());
@@ -92,6 +101,7 @@ public class Game{
         this.bs.write(final_score.getBytes());
         this.bs.close();
     }
+
 }
 
 /* class which has the 'main' method */
@@ -104,7 +114,7 @@ class Play{
             e.printStackTrace();
         }
 
-        for(int i=0; i < Integer.valueOf(argv[3]); i++){
+        for(int i = 0; i < Integer.valueOf(argv[3]); i++){
             try{
                 game.play();
             } catch(Exception e){
@@ -112,7 +122,6 @@ class Play{
             }
         }
         
-
         try{
             game.EndGame();
         } catch(Exception e){
