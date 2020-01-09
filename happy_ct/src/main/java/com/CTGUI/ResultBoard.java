@@ -7,11 +7,13 @@ package com.CTGUI;
 
 import java.awt.Dimension;
 
-import javax.swing.SwingConstants;
+
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.table.*;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+
+
 
 /* insert Image */
 import java.awt.*;
@@ -29,61 +31,67 @@ import javax.swing.ImageIcon;
  */
 public class ResultBoard extends JPanel {
    
-    JTable Board;
-    JScrollPane jscroll;
+    JLabel[] PlayerBoard = new JLabel[10];
+    JLabel[] BossBoard = new JLabel[10];
+    JPanel Player;
+    JPanel Boss;
     
     /* constructor */
     public ResultBoard(){
-        Image image;
+        /* Initialization */
         try{
-            // File path Problem??
-            // ref1: https://pkss.tistory.com/entry/JTable%EC%97%90-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%84%A3%EA%B8%B0
-            // ref2: https://stackoverflow.com/questions/25378231/cant-add-image-using-imageicon-to-jtable-cell
-            image = ImageIO.read(new File("src/main/java/images/bg.jpg"));
-        } catch(IOException e){
-            return;
-        }
-        ImageIcon test = new ImageIcon(image);
+            this.PlayerBoard[0] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/player_txt.png"));
+            this.BossBoard[0] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/boss_txt.png"));
 
-        String[] headings = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-        Object[][] data = {
-            {"Player 1", test, "", "", "", "", "", "", "", "", ""}, 
-            {"Boss", "", "", "", "", "", "", "", "", "", ""}, 
-        };
-        DefaultTableModel model = new DefaultTableModel(data, headings)
-        {
-            @Override
-            public Class getColumnClass(int column){
-                switch(column){
-                    case 0:
-                    case 1: return Integer.class;
-                    case 2: return ImageIcon.class;
-                    default: return Object.class;
-                }
+            for(int i=1; i<10; i++){
+                this.PlayerBoard[i] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/empty_entry.png"));
+                this.BossBoard[i] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/empty_entry.png"));
             }
-        };
-        this.Board = new JTable(model);
-
-        /* JTable header & entry center-alignment */
-        DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
-        celAlignCenter.setHorizontalAlignment(SwingConstants.CENTER);
-        Board.getTableHeader().setDefaultRenderer(celAlignCenter);
-        TableColumnModel tcm = Board.getColumnModel();
-        
-        for(int i=0; i < tcm.getColumnCount(); i++){
-            tcm.getColumn(i).setCellRenderer(celAlignCenter);
+        }catch(Exception e){
+           return;
         }
         
-        this.jscroll = new JScrollPane(Board);
-        this.jscroll.setPreferredSize(new Dimension(1000, 200));
-        this.setPreferredSize(new Dimension(1500, 300));
+        /* Layout */
+        this.Player = new JPanel();
+        this.Player.setLayout(new BoxLayout(this.Player, BoxLayout.X_AXIS));
+        
+        this.Boss = new JPanel();
+        this.Boss.setLayout(new BoxLayout(this.Boss, BoxLayout.X_AXIS));
+        
+        for(int i=0; i<10; i++){
+            this.Player.add(this.PlayerBoard[i]);
+            this.Player.add(Box.createHorizontalStrut(5));
+            this.Boss.add(this.BossBoard[i]);
+            this.Boss.add(Box.createHorizontalStrut(5));
 
-        this.add(this.jscroll);     // add to JPanel;
+        }
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(this.Player);
+        this.add(this.Boss);
+        
+        this.setPreferredSize(new Dimension(1000, 200));
+        RecordResult(5, true, false);
+      
     }
     
     /* Record the B/C result in the Board Table */
-    public void RecordResult(int Turn, String result1, String result2){
-        this.Board.setValueAt(result1, 0, Turn);
-        this.Board.setValueAt(result2, 1, Turn);
+    public void RecordResult(int Turn, Boolean result1, Boolean result2){
+        if(result1){
+            this.PlayerBoard[Turn] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/C_entry.png"));
+            this.Player.add(PlayerBoard[Turn], Turn);
+        }else{
+            this.PlayerBoard[Turn] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/B_entry.png"));
+            this.Player.add(PlayerBoard[Turn], Turn);
+        }
+        
+        if(result2){
+            this.BossBoard[Turn] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/C_entry.png"));
+            this.Boss.add(BossBoard[Turn], Turn);
+        }else{
+            this.BossBoard[Turn] = new JLabel(new ImageIcon("src/main/java/images/ResultBoard/B_entry.png"));
+            this.Boss.add(BossBoard[Turn], Turn);
+        }
+        
     }
 }
