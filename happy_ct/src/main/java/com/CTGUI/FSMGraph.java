@@ -32,8 +32,8 @@ public class FSMGraph extends JPanel {
     private Collection<Object> cells;
     private ArrayList<Object> cellsArray;
 
-    private final String attr2 = "1 1 5\r\n1 2 6\r\n1 3 7\r\n1 4 8\r\n1 5 9\r\n0 0 6\r\n0 1 7\r\n0 2 8\r\n0 3 9\r\n0 4 9";
-    private final String attr = "1 1 3\r\n1 2 4\r\n1 2 5\r\n0 0 4\r\n0 1 5\r\n0 2 5";
+    private final String attr2 = "C 1 5\r\nC 2 6\r\nC 3 7\r\nC 4 8\r\nC 5 9\r\nB 0 6\r\nB 1 7\r\nB 2 8\r\nB 3 9\r\nB 4 9";
+    private final String attr = "C 1 3\r\nC 2 4\r\nC 2 5\r\nB 0 4\r\nB 1 5\r\nB 2 5";
 
     public FSMGraph() {
         graph = new DefaultDirectedGraph<>(FSMEdge.class);
@@ -47,8 +47,8 @@ public class FSMGraph extends JPanel {
 
         setBackground(Color.WHITE);
 
-        mxGraphLayout layout = new mxHierarchicalLayout(jgxAdapter);
-        layout.execute(jgxAdapter.getDefaultParent());
+//        mxGraphLayout layout = new mxHierarchicalLayout(jgxAdapter);
+//        layout.execute(jgxAdapter.getDefaultParent());
     }
 
     public void rePaint() {
@@ -122,12 +122,14 @@ public class FSMGraph extends JPanel {
     public void setGraph(String attr) {
         String content = null;
         if (attr == null) {
-            content = this.attr;
+            return;
+            //content = this.attr;
         }
         else {
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new FileReader(new File(attr)));
+                System.out.println("HELLO");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(FSMGraph.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -142,7 +144,7 @@ public class FSMGraph extends JPanel {
         String[] g = content.split("\r\n");
 
         for (int i = 1; i < g.length + 1; i++) {
-            fsmCells.add(new FSMCell(i, g[i - 1].split(" ")[0].equals("1")));
+            fsmCells.add(new FSMCell(i, g[i - 1].split(" ")[0].equals("C")));
         }
 
         for (FSMCell c : fsmCells) {
@@ -163,39 +165,40 @@ public class FSMGraph extends JPanel {
             graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[2])), e2);
         }
 
-        setCurrent(1);
+        setCurrent(1, true);
     }
 
-    public void setCurrent(int newId) {
+    public void setCurrent(int newId, boolean resetGraph) {
         rePaint();
+        if(!resetGraph) {
+            for (FSMEdge e : fsmEdges) {
+                if (e.source == currentId && e.target == newId) {
+                    ArrayList<Object> edge = new ArrayList<>();
+                    edge.add(cellsArray.get(cells.size() - e.id - 2 - fsmCells.size()));
 
-        for (FSMEdge e : fsmEdges) {
-            if (e.source == currentId && e.target == newId) {
-                ArrayList<Object> edge = new ArrayList<>();
-                edge.add(cellsArray.get(cells.size() - e.id - 2 - fsmCells.size()));
-
-                mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
-                        mxConstants.STYLE_STROKEWIDTH, String.valueOf(3));
-                if (e.coop) {
                     mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
-                            mxConstants.STYLE_STROKECOLOR, "#40b7f7");
-                } else {
-                    mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
-                            mxConstants.STYLE_STROKECOLOR, "#eb4696");
+                            mxConstants.STYLE_STROKEWIDTH, String.valueOf(3));
+                    if (e.coop) {
+                        mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
+                                mxConstants.STYLE_STROKECOLOR, "#40b7f7");
+                    } else {
+                        mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
+                                mxConstants.STYLE_STROKECOLOR, "#eb4696");
+                    }
+                    break;
                 }
-                break;
             }
         }
-
-        ArrayList<Object> start = new ArrayList<>();
-        start.add(cellsArray.get(cells.size() - 3));
+        else {
+            System.out.println("RESET GRAPH?");
+        }
 
         ArrayList<Object> current = new ArrayList<>();
         current.add(cellsArray.get(cells.size() - 2 - newId));
 
         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), current.toArray(),
                 mxConstants.STYLE_STROKEWIDTH, String.valueOf(3));
-        if (fsmCells.get(newId).coop) {
+        if (fsmCells.get(newId - 1).coop) {
             mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), current.toArray(),
                     mxConstants.STYLE_STROKECOLOR, "#0000FF");
         } else {
@@ -204,6 +207,9 @@ public class FSMGraph extends JPanel {
         }
 
         currentId = newId;
+
+        mxGraphLayout layout = new mxHierarchicalLayout(jgxAdapter);
+        layout.execute(jgxAdapter.getDefaultParent());
     }
 
     private static class FSMCell {

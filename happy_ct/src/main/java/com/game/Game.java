@@ -12,6 +12,10 @@ import java.io.IOException;
 
 public class Game{
     int NumOfTurn;
+    int resetTurn;
+
+    String resetBoss;
+    String resetPlayer;
 
     Player player;
     Player boss;
@@ -27,6 +31,15 @@ public class Game{
         this.bs = new BufferedOutputStream(new FileOutputStream(output));
 
         this.NumOfTurn = NumOfTurn;
+        this.resetTurn = NumOfTurn;
+        resetBoss = boss;
+        resetPlayer = player;
+    }
+
+    public void resetGame() {
+        NumOfTurn = resetTurn;
+        boss = new Player(resetBoss);
+        player = new Player(resetPlayer);
     }
 
     /* Play one turn */
@@ -37,24 +50,24 @@ public class Game{
         if(this.player.getAction() && this.boss.getAction()){ // C - C
             this.player.addScore(300);
             this.boss.addScore(300);
-            result.append("C C ");
+            result.append("C C \n");
         }
         if(!(this.player.getAction()) && this.boss.getAction()){
             this.player.addScore(400);
             this.boss.addScore(-200);
-            result.append("B C ");
+            result.append("B C \n");
         }
         if(this.player.getAction() && !(this.boss.getAction())){
             this.player.addScore(-200);
             this.boss.addScore(400);
-            result.append("C B ");
+            result.append("C B \n");
         }
         if(!(this.player.getAction()) && !(this.boss.getAction())){
             this.player.addScore(-300);
             this.boss.addScore(-300);
-            result.append("B B ");
+            result.append("B B \n");
         }
-        System.out.print(result.toString() + Integer.toString(this.boss.getCurrentID())+"\n");
+        System.out.println(result.toString() + this.player.getCurrentID());
 
         /* Move Next State */
         boolean current_boss = this.boss.getAction();
@@ -70,7 +83,7 @@ public class Game{
     }
 
     public void EndGame() throws Exception{
-        String final_score = Integer.toString(this.player.getScore()) + " " + Integer.toString(this.boss.getScore());
+        String final_score = this.player.getScore() + " " + this.boss.getScore();
         this.bs.write(final_score.getBytes());
         this.bs.close();
     }
@@ -82,4 +95,6 @@ public class Game{
     public Player getBoss() {
         return this.boss;
     }
+
+    public int getResetTurn() { return this.resetTurn; }
 }

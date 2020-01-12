@@ -34,9 +34,9 @@ public class Dfa{
             int C_arc = Integer.valueOf(line.substring(2, 3));
             int B_arc = Integer.valueOf(line.substring(4, 5));
 
-            if(line.charAt(0) == '1'){
+            if(line.charAt(0) == 'C'){
                 state = new State(true, C_arc, B_arc);
-            }else if(line.charAt(0) == '0'){
+            }else if(line.charAt(0) == 'B'){
                 state = new State(false, C_arc, B_arc);
             }
             this.states.add(state);

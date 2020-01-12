@@ -21,6 +21,9 @@ public class Ct_Frame extends javax.swing.JFrame {
         initComponents();
         cont = new Controller();
         cont.init_game();
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        count = 0;
     }
 
     /**
@@ -56,7 +59,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Reset");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -88,11 +91,16 @@ public class Ct_Frame extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(fSMGraph2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jButton1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton3)))
                         .addGap(67, 67, 67)
                         .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(80, 80, 80))
@@ -147,8 +155,16 @@ public class Ct_Frame extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             cont.game.play();
-            fSMGraph2.setCurrent(cont.game.getPlayer().getCurrentID());
+            fSMGraph2.setCurrent(cont.game.getPlayer().getCurrentID() + 1, false);
+            fSMGraph3.setCurrent(cont.game.getBoss().getCurrentID() + 1, false);
             fSMGraph2.repaint();
+            fSMGraph3.repaint();
+            fSMGraph2.revalidate();
+            fSMGraph3.revalidate();
+            if(++count == cont.game.getResetTurn()) {
+                jButton2.setEnabled(false);
+                jButton3.setEnabled(true);
+            }
         } catch (Exception ex) {
             Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -156,8 +172,15 @@ public class Ct_Frame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        cont.game.resetGame();
         fSMGraph2.setGraph("src/main/java/files/player.txt");
+        fSMGraph3.setGraph("src/main/java/files/boss1.txt");
         fSMGraph2.repaint();
+        fSMGraph3.repaint();
+        fSMGraph2.revalidate();
+        fSMGraph3.revalidate();
+        jButton2.setEnabled(true);
+        count = 0;
         //fSMGraph3.setGraph(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -165,6 +188,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             cont.game.EndGame();
+            jButton3.setEnabled(false);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -204,6 +228,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         });
     }
     private Controller cont;
+    private int count;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.CTGUI.FSMGraph fSMGraph1;
     private com.CTGUI.FSMGraph fSMGraph2;
