@@ -1,4 +1,4 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,14 +8,16 @@ package com.CTGUI;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.Box;
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FontFormatException;
 
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
+
+import java.io.*;
 
 /**
  *
@@ -30,18 +32,29 @@ public class ScoreBoard extends JPanel{
     
     
     public ScoreBoard() {
+        
+        Font NanumFont = null;
+        try {
+            //create the font to use. Specify the size!
+            NanumFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/java/com/CTGUI/NanumSquare.ttf")).deriveFont(30f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
+        
         this.PlayerName = new JLabel("Group: ");
-        this.PlayerName.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.PlayerName.setFont(NanumFont);
         //this.PlayerName.setHorizontalAlignment(SwingConstants.CENTER);
 
         this.Turn = new JLabel("Turn: ");
-        this.Turn.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.Turn.setFont(NanumFont);
         
         this.PlayerScore = new JLabel("Player Score: ");
-        this.PlayerScore.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.PlayerScore.setFont(NanumFont);
         
         this.BossScore = new JLabel("Boss Score: ");
-        this.BossScore.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.BossScore.setFont(NanumFont);
         
         /* Layout */
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

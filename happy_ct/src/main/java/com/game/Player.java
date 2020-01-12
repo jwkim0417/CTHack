@@ -21,7 +21,6 @@ public class Player {
         this.dfa = new Dfa(dfa_path);
         this.current_stateID = -1;//
         this.score = 0;
-        //this.dfa.printAll();
     }
 
     public boolean getAction(){

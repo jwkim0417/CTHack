@@ -158,9 +158,7 @@ public class Ct_Frame extends javax.swing.JFrame {
     /* Play One Turn */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            cont.game.printCurrentID();
             cont.game.play();
-            cont.game.printCurrentID();
 
             /* Score Board */
             scoreBoard2.setPlayerScore(cont.game.getPlayer().getScore());

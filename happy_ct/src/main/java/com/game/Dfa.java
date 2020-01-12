@@ -63,6 +63,5 @@ public class Dfa{
             System.out.print("\n");
         }
     }
-
 }
 
