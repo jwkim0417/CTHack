@@ -158,13 +158,6 @@ public class Ct_Frame extends javax.swing.JFrame {
     /* Play One Turn */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            cont.game.play();
-
-            /* Score Board */
-            scoreBoard2.setPlayerScore(cont.game.getPlayer().getScore());
-            scoreBoard2.setBossScore(cont.game.getBoss().getScore());
-            scoreBoard2.setTurn(cont.game.getCurrentTurn());
-            
             /* FSM Graph */
             fSMGraph2.setCurrent(cont.game.getPlayer().getCurrentID() + 1, false);
             fSMGraph3.setCurrent(cont.game.getBoss().getCurrentID() + 1, false);
@@ -172,15 +165,24 @@ public class Ct_Frame extends javax.swing.JFrame {
             fSMGraph3.repaint();
             fSMGraph2.revalidate();
             fSMGraph3.revalidate();
+
+            /*
+            Result board, setTurn. Record *BEFORE* play(), since game does not memorize previous states & outputs
+                and play() makes the game steps forward.
+             */
+            resultBoard2.RecordResult(cont.game.getOngoingTurn(), cont.game.getPlayer().getAction(), cont.game.getBoss().getAction());
+
+            cont.game.play();
+            /* Score Board */
+            scoreBoard2.setTurn(cont.game.getPreviousTurn());
+            scoreBoard2.setPlayerScore(cont.game.getPlayer().getScore());
+            scoreBoard2.setBossScore(cont.game.getBoss().getScore());
+
             if(++count == cont.game.getMAXTurn()) {
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(true);
             }
-            
-            /* Result Board */
-            if(cont.game.getCurrentTurn() != -1){
-                resultBoard2.RecordResult(cont.game.getCurrentTurn(), cont.game.getPlayer().getAction(), cont.game.getBoss().getAction());
-            }
+
         } catch (Exception ex) {
             Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -188,12 +190,12 @@ public class Ct_Frame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         /* Result Board */
         resultBoard2.ResetBoard();
-        
+
         cont.game.resetGame();
-        
+
         /* Score Board */
         scoreBoard2.setPlayerName(cont.game.getPlayer().getName());
         scoreBoard2.setTurn(0);
@@ -210,9 +212,9 @@ public class Ct_Frame extends javax.swing.JFrame {
         jButton2.setEnabled(true);
         count = 0;
         //fSMGraph3.setGraph(null);
-        
-        
-        
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -232,7 +234,7 @@ public class Ct_Frame extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
