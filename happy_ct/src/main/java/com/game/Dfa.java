@@ -1,21 +1,10 @@
+package com.game;
+
 import java.util.ArrayList;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-class State{
-    /* Cooperate = true, Betrayal = false */
-    boolean Action;
-    int C_arc;
-    int B_arc;
-
-    public State(boolean action, int c_arc, int b_arc){
-        this.Action = action;
-        this.C_arc = c_arc;
-        this.B_arc = b_arc;
-    }
-}
 
 public class Dfa{
     ArrayList<State> states;
@@ -45,14 +34,12 @@ public class Dfa{
             int C_arc = Integer.valueOf(line.substring(2, 3));
             int B_arc = Integer.valueOf(line.substring(4, 5));
 
-            if(line.charAt(0) == '1'){
+            if(line.charAt(0) == 'C'){
                 state = new State(true, C_arc, B_arc);
-            }else if(line.charAt(0) == '0'){
+            }else if(line.charAt(0) == 'B'){
                 state = new State(false, C_arc, B_arc);
             }
             this.states.add(state);
-
-            //System.out.println(line);
         }
         br.close();
     }
@@ -65,7 +52,6 @@ public class Dfa{
         if(action){
             return this.states.get(currentID).C_arc;
         }else{
-            //System.out.println(this.states.get(currentID).B_arc);
             return this.states.get(currentID).B_arc;
         }
     }
@@ -75,7 +61,6 @@ public class Dfa{
             System.out.print(states.get(i).C_arc);
             System.out.print(states.get(i).B_arc);
             System.out.print("\n");
-
         }
     }
 

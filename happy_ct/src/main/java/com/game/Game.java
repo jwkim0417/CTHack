@@ -1,45 +1,21 @@
+package com.game;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 /*******************/
 // #run
-// java Game boss.txt player.txt result.txt 10
+// java Game player.txt boss.txt result.txt 10
 // 
 /*******************/
 
-class Player{
-    Dfa dfa;
-    int current_stateID;
-    int score;
+public class Game{
+    int CurrentTurn;
+    int MAXTurn;
 
-    public Player(String dfa_path){
-        this.dfa = new Dfa(dfa_path);
-        this.current_stateID = 0;
-        this.score = 0;
-        this.dfa.printAll();
-    }
-
-    public boolean getAction(){
-        return this.dfa.getAction(this.current_stateID);
-    }
-    public void addScore(int score){
-        this.score += score;
-    }
-    public int getScore(){
-        return this.score;
-    }
-    public void moveNextState(boolean action){
-       this.current_stateID = this.dfa.getNextState(this.current_stateID, action);
-    }
-    public int getCurrentID(){
-        return this.current_stateID;
-    }
-}
-
-
-class Game{
-    int NumOfTurn;
+    String resetBoss;
+    String resetPlayer;
 
     Player player;
     Player boss;
@@ -47,42 +23,47 @@ class Game{
     BufferedOutputStream bs = null;
 
     /* Constructor */
-    public Game(String boss, String player, String output, int NumOfTurn) throws IOException{
-        this.boss = new Player(boss);
-
-        this.player = new Player(player);
+    public Game(String player, String boss, String output, int NumOfTurn) throws IOException{
+        resetBoss = boss;
+        resetPlayer = player;
+        
+        this.player = new Player(resetPlayer);
+        this.boss = new Player(resetBoss);
 
         this.bs = new BufferedOutputStream(new FileOutputStream(output));
 
-        this.NumOfTurn = NumOfTurn;
+        this.MAXTurn = NumOfTurn;
+        this.CurrentTurn = 0;
+    }
+
+    public void resetGame() {
+        System.out.println("reset!!");
+        this.CurrentTurn = 0;
+        this.boss = new Player(resetBoss);
+        this.player = new Player(resetPlayer);
     }
 
     /* Play one turn */
     public void play() throws Exception{
-        System.out.println(this.NumOfTurn + " turn left...");
-        StringBuffer result = new StringBuffer();
-
-        if(this.player.getAction() && this.boss.getAction()){ // C - C
-            this.player.addScore(300);
-            this.boss.addScore(300);
-            result.append("C C ");
+        if(this.player.getCurrentID() == -1){
+            this.player.current_stateID = 0;
+            this.boss.current_stateID = 0;
+            
+            String result = CompareAction(this.getPlayer().getAction(), this.getBoss().getAction());
+            
+             /* File Write */
+            this.bs.write(result.getBytes());
+            this.CurrentTurn++;
+            
+            return;
         }
-        if(!(this.player.getAction()) && this.boss.getAction()){
-            this.player.addScore(400);
-            this.boss.addScore(-200);
-            result.append("B C ");
+        
+        /* Reach the Last Turn */
+        if(this.CurrentTurn > this.MAXTurn){
+            return;
         }
-        if(this.player.getAction() && !(this.boss.getAction())){
-            this.player.addScore(-200);
-            this.boss.addScore(400);
-            result.append("C B ");
-        }
-        if(!(this.player.getAction()) && !(this.boss.getAction())){
-            this.player.addScore(-300);
-            this.boss.addScore(-300);
-            result.append("B B ");
-        }
-        System.out.print(result.toString() + Integer.toString(this.boss.getCurrentID())+"\n");
+                
+        String result = CompareAction(this.getPlayer().getAction(), this.getBoss().getAction());
 
         /* Move Next State */
         boolean current_boss = this.boss.getAction();
@@ -90,45 +71,60 @@ class Game{
 
         this.player.moveNextState(current_boss);
         this.boss.moveNextState(current_player);
+       
         
         /* File Write */
-        this.bs.write(result.toString().getBytes());
-        this.NumOfTurn--;
+        this.bs.write(result.getBytes());
+        this.CurrentTurn++;
+    }
+    
+    /* Compare with each player Action & Add Score */
+    public String CompareAction(boolean PlayerAction, boolean BossAction){
+        String Result;
+        if(PlayerAction && BossAction){ // C - C
+            this.player.addScore(2);
+            this.boss.addScore(2);
+            Result = "C C \n";
+        }
+        else if(!(PlayerAction) && BossAction){
+            this.player.addScore(3);
+            this.boss.addScore(0);
+            Result = "B C \n";
+        }
+        else if(PlayerAction && !(BossAction)){
+            this.player.addScore(0);
+            this.boss.addScore(3);
+            Result = "C B \n";
+        }else{
+            this.player.addScore(1);
+            this.boss.addScore(1);
+            Result = "B B \n" ;
+        }
+        Result = Integer.toString(this.CurrentTurn) + " " + Result;
+        
+        System.out.println(this.CurrentTurn + " Turn... ");
+        System.out.println(Result);
+        return Result;
     }
 
     public void EndGame() throws Exception{
-        String final_score = Integer.toString(this.player.getScore()) + " " + Integer.toString(this.boss.getScore());
+        String final_score = this.player.getScore() + " " + this.boss.getScore();
         this.bs.write(final_score.getBytes());
         this.bs.close();
     }
+    
+    public Player getPlayer() {
+        return this.player;
+    }
+    
+    public Player getBoss() {
+        return this.boss;
+    }
 
-}
-
-/* class which has the 'main' method */
-class Play{
-    public static void main(String[] argv){
-        Game game = null;
-        try {
-            game = new Game(argv[0], argv[1], argv[2], Integer.valueOf(argv[3]));
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        for(int i = 0; i < Integer.valueOf(argv[3]); i++){
-            try{
-                game.play();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        
-        try{
-            game.EndGame();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        
-        
+    public int getMAXTurn() { return this.MAXTurn; }
+    public int getCurrentTurn() {return this.CurrentTurn; }
+    public void printCurrentID() {
+        System.out.println(this.player.getCurrentID());        
+        System.out.println(this.boss.getCurrentID());
     }
 }

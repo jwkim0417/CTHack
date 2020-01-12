@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.CTGUI;
+import com.game.Game;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -15,6 +17,9 @@ public class Controller {
     left_bg lb;
     right_player rp;
     left_player lp;
+    ScoreBoard sb;
+    Game game = null;
+
     public void set_rb(right_bg bg){
         rb=bg;
     }
@@ -27,6 +32,15 @@ public class Controller {
     public void set_lp(left_player player){
         lp=player;
     }
+
+    public void init_game() {
+        try {
+            game = new Game("src/main/java/files/player.txt", "src/main/java/files/boss1.txt", "src/main/java/files/result.txt", 10);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void command(boolean coop1, boolean coop2) throws InterruptedException{
         if(coop1 && coop2){
             waiting wait=new waiting();
