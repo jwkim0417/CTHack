@@ -5,6 +5,7 @@
  */
 package com.CTGUI;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -23,18 +24,19 @@ public class right_player extends JPanel{
     public void init(){
         
         now=0;
-        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/stand.jpg");  
+        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/stand.gif");  
         walk = Toolkit.getDefaultToolkit().createImage("src/main/java/images/walk.gif");  
         shoot = Toolkit.getDefaultToolkit().createImage("src/main/java/images/shoot.gif");  
         dazed = Toolkit.getDefaultToolkit().createImage("src/main/java/images/dazed.gif");  
-        curr=walk;
+        curr=stop;
     }
     
-    public void paintComponent(Graphics g) {  
+    public void paintComponent(Graphics g) { 
         super.paintComponent(g);  
         if (curr != null) {  
           g.drawImage(curr, 0, 0, this); 
         }  
+        setBackground(new Color(0,0,0,0)); 
       }
 
     public void  setwalk(){
