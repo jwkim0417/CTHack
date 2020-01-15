@@ -45,10 +45,7 @@ public class FSMGraph extends JPanel {
 
         setGraph(null);
 
-        setBackground(Color.WHITE);
-
-//        mxGraphLayout layout = new mxHierarchicalLayout(jgxAdapter);
-//        layout.execute(jgxAdapter.getDefaultParent());
+        setBackground(new Color(255, 255, 255));
     }
 
     public void rePaint() {
@@ -78,6 +75,7 @@ public class FSMGraph extends JPanel {
         ArrayList<Object> bet = new ArrayList<>();
         ArrayList<Object> coopEdge = new ArrayList<>();
         ArrayList<Object> betEdge = new ArrayList<>();
+        ArrayList<Object> bothEdge = new ArrayList<>();
 
         for (FSMCell c : fsmCells) {
             if (c.coop)
@@ -87,10 +85,12 @@ public class FSMGraph extends JPanel {
         }
 
         for (FSMEdge e : fsmEdges) {
-            if (e.coop)
+            if (e.coop == 1)
                 coopEdge.add(cellsArray.get(cells.size() - e.id - 2 - fsmCells.size()));
-            else
+            else if (e.coop == 0)
                 betEdge.add(cellsArray.get(cells.size() - e.id - 2 - fsmCells.size()));
+            else
+                bothEdge.add(cellsArray.get(cells.size() - e.id - 2 - fsmCells.size()));
         }
 
         // System.out.println(graphModel.getCells());
@@ -109,6 +109,8 @@ public class FSMGraph extends JPanel {
                 mxConstants.STYLE_STROKECOLOR, "#0000FF");
         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), betEdge.toArray(),
                 mxConstants.STYLE_STROKECOLOR, "#f53643");
+        mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), bothEdge.toArray(),
+                mxConstants.STYLE_STROKECOLOR, "#000000");
         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), start.toArray(), mxConstants.STYLE_STROKEWIDTH,
                 String.valueOf(3));
         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), start.toArray(), mxConstants.STYLE_STROKECOLOR,
@@ -123,7 +125,6 @@ public class FSMGraph extends JPanel {
         String content = null;
         if (attr == null) {
             return;
-            //content = this.attr;
         }
         else {
             BufferedReader reader = null;
@@ -157,13 +158,21 @@ public class FSMGraph extends JPanel {
             int source = fsmCells.get(i - 1).id;
             int target1 = fsmCells.get(Integer.parseInt(tmp[1])).id;
             int target2 = fsmCells.get(Integer.parseInt(tmp[2])).id;
-            FSMEdge e1 = new FSMEdge(++j, true, source, target1);
-            FSMEdge e2 = new FSMEdge(++j, false, source, target2);
-            fsmEdges.add(e1);
-            fsmEdges.add(e2);
-            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[1])), e1);
-            graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[2])), e2);
+            if(target1 == target2) {
+                FSMEdge e = new FSMEdge(++j, 2, source, target1);
+                fsmEdges.add(e);
+                graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[1])), e);
+            }
+            else {
+                FSMEdge e1 = new FSMEdge(++j, 1, source, target1);
+                FSMEdge e2 = new FSMEdge(++j, 0, source, target2);
+                fsmEdges.add(e1);
+                fsmEdges.add(e2);
+                graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[1])), e1);
+                graph.addEdge(fsmCells.get(i - 1), fsmCells.get(Integer.parseInt(tmp[2])), e2);
+            }
         }
+
         rePaint();
         mxGraphLayout layout = new mxHierarchicalLayout(jgxAdapter);
         layout.execute(jgxAdapter.getDefaultParent());
@@ -180,12 +189,15 @@ public class FSMGraph extends JPanel {
 
                     mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
                             mxConstants.STYLE_STROKEWIDTH, String.valueOf(3));
-                    if (e.coop) {
+                    if (e.coop == 1) {
                         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
                                 mxConstants.STYLE_STROKECOLOR, "#40b7f7");
-                    } else {
+                    } else if (e.coop == 0) {
                         mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
                                 mxConstants.STYLE_STROKECOLOR, "#eb4696");
+                    } else {
+                        mxStyleUtils.setCellStyles(graphComponent.getGraph().getModel(), edge.toArray(),
+                                mxConstants.STYLE_STROKECOLOR, "#000000");
                     }
                     break;
                 }
@@ -231,11 +243,11 @@ public class FSMGraph extends JPanel {
 
     private static class FSMEdge extends DefaultEdge {
         int id;
-        boolean coop;
+        int coop;
         int source;
         int target;
 
-        FSMEdge(int id, boolean coop, int source, int target) {
+        FSMEdge(int id, int coop, int source, int target) {
             this.id = id;
             this.coop = coop;
             this.source = source;

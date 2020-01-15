@@ -24,10 +24,10 @@ public class right_player extends JPanel{
     public void init(){
         
         now=0;
-        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/stand.gif");  
-        walk = Toolkit.getDefaultToolkit().createImage("src/main/java/images/walk.gif");  
-        shoot = Toolkit.getDefaultToolkit().createImage("src/main/java/images/shoot.gif");  
-        dazed = Toolkit.getDefaultToolkit().createImage("src/main/java/images/dazed.gif");  
+        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/b1/stand_b1.gif");  
+        walk = Toolkit.getDefaultToolkit().createImage("src/main/java/images/b1/walk_b1.gif");  
+        shoot = Toolkit.getDefaultToolkit().createImage("src/main/java/images/b1/shoot_b1.gif");  
+        dazed = Toolkit.getDefaultToolkit().createImage("src/main/java/images/b1/dazed_b1.gif");  
         curr=stop;
     }
     

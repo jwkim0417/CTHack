@@ -22,16 +22,21 @@ import javax.swing.border.Border;
  */
 public class right_bg extends JPanel {
     private BufferedImage image;
-    Integer x,y;
+    Boolean reset;
+    Integer x,y,initx;
     Boolean move;
     public right_bg(){
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        x=-180;
-        y=-250;
+        x=0;
+        y=0;
+        initx=x;
         move=false;
+        reset=false;
     }
-    
+    public void init(){
+        reset=true;
+    }
     public void startmove(){
         move=true;
     }
@@ -42,19 +47,18 @@ public class right_bg extends JPanel {
     protected void paintComponent(Graphics g) {
 
         try {
-          image = ImageIO.read(new File("src/main/java/images/bg.jpg"));
+          image = ImageIO.read(new File("src/main/java/images/bg_r.jpg"));
        } catch (IOException ex) {
            return;
        }
-        BufferedImage bi = new BufferedImage(2 * image.getWidth(null),
-                                             2 * image.getHeight(null),
-                                             BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D grph = (Graphics2D) bi.getGraphics();
-        grph.scale(2, 2);
         super.paintComponent(g);
-        if(move) x--;
+        if(move) x-=8;
+        if(reset){
+            reset=false;
+            x=initx;
+        }
         g.drawImage(image, x, y, null);
         repaint();
+        revalidate();
     }
 }

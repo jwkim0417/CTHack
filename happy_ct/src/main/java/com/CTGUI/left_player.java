@@ -24,17 +24,17 @@ public class left_player extends JPanel{
     public void init(){
         
         now=0;
-        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/stand.gif");  
-        walk = Toolkit.getDefaultToolkit().createImage("src/main/java/images/walk.gif");  
-        shoot = Toolkit.getDefaultToolkit().createImage("src/main/java/images/shoot.gif");  
-        dazed = Toolkit.getDefaultToolkit().createImage("src/main/java/images/dazed.gif");  
+        stop = Toolkit.getDefaultToolkit().createImage("src/main/java/images/player/stand.gif");  
+        walk = Toolkit.getDefaultToolkit().createImage("src/main/java/images/player/walk.gif");  
+        shoot = Toolkit.getDefaultToolkit().createImage("src/main/java/images/player/shoot.gif");  
+        dazed = Toolkit.getDefaultToolkit().createImage("src/main/java/images/player/dazed.gif");  
         curr=stop;
     }
     
     public void paintComponent(Graphics g) {  
         super.paintComponent(g);  
-        if (curr != null) {  
-          g.drawImage(curr, 0, 0, this); 
+        if (curr != null) {
+          g.drawImage(curr, 274, 0, this); 
         }  
         setBackground(new Color(0,0,0,0));
       }

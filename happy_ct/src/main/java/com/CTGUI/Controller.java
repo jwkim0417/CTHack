@@ -47,6 +47,7 @@ public class Controller {
         } catch(Exception e){
             e.printStackTrace();
         }
+        
     }
     public boolean check(){
         return cc.isAlive() || cb.isAlive() || bc.isAlive() || bb.isAlive() ;
@@ -83,7 +84,7 @@ public class Controller {
             rb.startmove();
             lb.startmove();
             try { 
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -101,9 +102,8 @@ public class Controller {
             rp.setshoot();
             lp.setdazed();
             rb.startmove();
-            lb.startmove();
             try { 
-                Thread.sleep(300);
+                Thread.sleep(1300);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -126,10 +126,9 @@ public class Controller {
         public void run(){
             lp.setshoot();
             rp.setdazed();
-            rb.startmove();
             lb.startmove();
             try { 
-                Thread.sleep(300);
+                Thread.sleep(2300);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
