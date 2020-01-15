@@ -5,6 +5,7 @@
  */
 package com.CTGUI;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,44 +22,37 @@ import javax.swing.border.Border;
  * @author kimsj0302
  */
 public class right_bg extends JPanel {
-    private BufferedImage image;
-    Boolean reset;
-    Integer x,y,initx;
-    Boolean move;
+    private BufferedImage image,boss1,boss2,C,D;
+    Integer x,y,b;
+    
     public right_bg(){
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        x=0;
-        y=0;
-        initx=x;
-        move=false;
-        reset=false;
+        b=0;
+        setOpaque(false);
     }
-    public void init(){
-        reset=true;
+    public void setboss(int n){
+        b=n;
     }
-    public void startmove(){
-        move=true;
+    public void setperson() throws IOException{
+        if(b==0){
+            image=ImageIO.read(new File("src/main/java/images/boss_1.png"));
+        }
+        else{
+            image=ImageIO.read(new File("src/main/java/images/boss_2.png"));
+        }
     }
-    public void endmove(){
-        move=false;
+    public void setC() throws IOException{
+        image=ImageIO.read(new File("src/main/java/images/jewelry.png"));
     }
+    public void setD() throws IOException{
+        image=ImageIO.read(new File("src/main/java/images/empty_r.png"));
+    }
+
+    
     @Override
     protected void paintComponent(Graphics g) {
-
-        try {
-          image = ImageIO.read(new File("src/main/java/images/bg_r.jpg"));
-       } catch (IOException ex) {
-           return;
-       }
         super.paintComponent(g);
-        if(move) x-=8;
-        if(reset){
-            reset=false;
-            x=initx;
-        }
-        g.drawImage(image, x, y, null);
-        repaint();
-        revalidate();
+        g.drawImage(image, 0, 0, null);
     }
 }

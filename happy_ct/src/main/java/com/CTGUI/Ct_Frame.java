@@ -7,8 +7,10 @@ package com.CTGUI;
  */
 import com.CTGUI.Controller;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author kimsj0302
@@ -18,14 +20,13 @@ public class Ct_Frame extends javax.swing.JFrame {
     /**
      * Creates new form Ct_Frame
      */
-    public Ct_Frame() {
+    public Ct_Frame() throws IOException {
         initComponents();
         cont = new Controller();
-        cont.init_game();
         jButton2.setEnabled(false);
-        jButton3.setEnabled(false);
         count = 0;
-        getContentPane().setBackground(new Color(255,142,1)); 
+        cont.set_lb(left_bg1);
+        cont.set_rb(right_bg1); 
     }
 
     /**
@@ -39,18 +40,25 @@ public class Ct_Frame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         fSMGraph1 = new com.CTGUI.FSMGraph();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         scoreBoard2 = new com.CTGUI.ScoreBoard();
         jPanel2 = new javax.swing.JPanel();
         fSMGraph2 = new com.CTGUI.FSMGraph();
-        left_bg1 = new com.CTGUI.left_bg();
-        left_player1 = new com.CTGUI.left_player();
         fSMGraph3 = new com.CTGUI.FSMGraph();
+        background2 = new com.CTGUI.background();
+        left_bg1 = new com.CTGUI.left_bg();
         right_bg1 = new com.CTGUI.right_bg();
-        right_player1 = new com.CTGUI.right_player();
-        resultBoard2 = new com.CTGUI.ResultBoard();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        resultBoard1 = new com.CTGUI.ResultBoard();
         jButton2 = new javax.swing.JButton();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,8 +71,14 @@ public class Ct_Frame extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(0, 0, 0));
+        setBackground(new java.awt.Color(61, 23, 95));
         setPreferredSize(new java.awt.Dimension(1920, 1200));
 
         scoreBoard2.setBackground(new java.awt.Color(255, 255, 255));
@@ -72,110 +86,78 @@ public class Ct_Frame extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        left_bg1.setBackground(new java.awt.Color(255, 255, 255));
         left_bg1.setBorder(null);
-
-        left_player1.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout left_player1Layout = new javax.swing.GroupLayout(left_player1);
-        left_player1.setLayout(left_player1Layout);
-        left_player1Layout.setHorizontalGroup(
-            left_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
-        );
-        left_player1Layout.setVerticalGroup(
-            left_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        left_bg1.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout left_bg1Layout = new javax.swing.GroupLayout(left_bg1);
         left_bg1.setLayout(left_bg1Layout);
         left_bg1Layout.setHorizontalGroup(
             left_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(left_bg1Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(left_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 673, Short.MAX_VALUE)
         );
         left_bg1Layout.setVerticalGroup(
             left_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(left_player1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
 
-        right_bg1.setBackground(new java.awt.Color(255, 255, 255));
         right_bg1.setBorder(null);
-
-        right_player1.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout right_player1Layout = new javax.swing.GroupLayout(right_player1);
-        right_player1.setLayout(right_player1Layout);
-        right_player1Layout.setHorizontalGroup(
-            right_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
-        );
-        right_player1Layout.setVerticalGroup(
-            right_player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 759, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout right_bg1Layout = new javax.swing.GroupLayout(right_bg1);
         right_bg1.setLayout(right_bg1Layout);
         right_bg1Layout.setHorizontalGroup(
             right_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(right_bg1Layout.createSequentialGroup()
-                .addComponent(right_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 89, Short.MAX_VALUE))
+            .addGap(0, 674, Short.MAX_VALUE)
         );
         right_bg1Layout.setVerticalGroup(
             right_bg1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(right_player1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        resultBoard2.setBackground(new java.awt.Color(255, 255, 255));
+        javax.swing.GroupLayout background2Layout = new javax.swing.GroupLayout(background2);
+        background2.setLayout(background2Layout);
+        background2Layout.setHorizontalGroup(
+            background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(background2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(left_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(right_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        background2Layout.setVerticalGroup(
+            background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, background2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(left_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(right_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(fSMGraph2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(fSMGraph2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(left_bg1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(right_bg1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(resultBoard2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(background2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resultBoard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(fSMGraph3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(fSMGraph3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(fSMGraph2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fSMGraph2, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(right_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(left_bg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(7, 7, 7)
-                        .addComponent(resultBoard2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(background2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(resultBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-
-        jButton3.setText("Export Result");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Setup");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setText("Next turn");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +165,41 @@ public class Ct_Frame extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jMenu3.setText("menu");
+
+        jMenuItem1.setText("quick result");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setText("setup");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("select boss");
+        jMenu4.setToolTipText("");
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("BOSS 1");
+        jRadioButtonMenuItem1.setEnabled(false);
+        jMenu4.add(jRadioButtonMenuItem1);
+
+        jRadioButtonMenuItem2.setText("BOSS 2");
+        jMenu4.add(jRadioButtonMenuItem2);
+
+        jMenuBar2.add(jMenu4);
+
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,28 +209,22 @@ public class Ct_Frame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scoreBoard2, javax.swing.GroupLayout.PREFERRED_SIZE, 1714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(87, 87, 87))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scoreBoard2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(scoreBoard2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -221,8 +232,7 @@ public class Ct_Frame extends javax.swing.JFrame {
 
     /* Play One Turn */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(cont.check())
-            return;
+        
         try {
             /* FSM Graph */
             fSMGraph2.setCurrent(cont.game.getPlayer().getCurrentID() + 1, false);
@@ -236,7 +246,7 @@ public class Ct_Frame extends javax.swing.JFrame {
             Result board, setTurn. Record *BEFORE* play(), since game does not memorize previous states & outputs
                 and play() makes the game steps forward.
              */
-            resultBoard2.RecordResult(cont.game.getOngoingTurn(), cont.game.getPlayer().getAction(), cont.game.getBoss().getAction());
+            resultBoard1.RecordResult(cont.game.getOngoingTurn(), cont.game.getPlayer().getAction(), cont.game.getBoss().getAction());
             System.out.println(cont.game.getPlayer().getAction());
             System.out.println(cont.game.getBoss().getAction());
             cont.command(cont.game.getPlayer().getAction(), cont.game.getBoss().getAction());
@@ -248,7 +258,6 @@ public class Ct_Frame extends javax.swing.JFrame {
 
             if(++count == cont.game.getMAXTurn()) {
                 jButton2.setEnabled(false);
-                jButton3.setEnabled(true);
             }
 
         } catch (Exception ex) {
@@ -256,52 +265,68 @@ public class Ct_Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    //SETUP
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
-        /* Result Board */
-        resultBoard2.ResetBoard();
-
+   
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(jRadioButtonMenuItem2.isSelected()){
+            JOptionPane.showMessageDialog(null, "2번 보스를 선택하였습니다.");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "1번 보스를 선택하였습니다.");
+        }
+        cont.init_game(jRadioButtonMenuItem2.isSelected()?2:1);
         cont.game.resetGame();
-
-        /* Score Board */
-        scoreBoard2.setPlayerName(cont.game.getPlayer().getName());
-        scoreBoard2.setTurn(0);
-        scoreBoard2.setPlayerScore(cont.game.getPlayer().getScore());
-        scoreBoard2.setBossScore(cont.game.getBoss().getScore());
-
-        /* FSM Graph */
-        fSMGraph2.setGraph("src/main/java/files/player.txt");
-        fSMGraph3.setGraph("src/main/java/files/boss1.txt");
-        fSMGraph2.repaint();
-        fSMGraph3.repaint();
-        fSMGraph2.revalidate();
-        fSMGraph3.revalidate();
-        jButton2.setEnabled(true);
-        count = 0;
-        //fSMGraph3.setGraph(null);
-        left_player1.init();
-        right_player1.init();
-        left_bg1.init();
-        right_bg1.init();
-        cont.set_lb(left_bg1);
-        cont.set_rb(right_bg1);
-        cont.set_lp(left_player1);
-        cont.set_rp(right_player1);
-        cont.set_movement();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        for(int i=0;i<10;i++){
+            try {
+                cont.game.play();
+            } catch (Exception ex) {
+                Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         try{
             cont.game.EndGame();
-            jButton3.setEnabled(false);
         } catch(Exception e){
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+        JOptionPane.showMessageDialog(null, "출력이 완료되었습니다.");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            // TODO add your handling code here:
+            cont.set_boss(jRadioButtonMenuItem2.isSelected()?1:0);
+            
+            /* Result Board */
+            resultBoard1.ResetBoard();
+            
+            cont.init_game(jRadioButtonMenuItem2.isSelected()?2:1);
+            cont.game.resetGame();
+            
+            /* Score Board */
+            scoreBoard2.setPlayerName(cont.game.getPlayer().getName());
+            scoreBoard2.setTurn(0);
+            scoreBoard2.setPlayerScore(cont.game.getPlayer().getScore());
+            scoreBoard2.setBossScore(cont.game.getBoss().getScore());
+            
+            /* FSM Graph */
+            fSMGraph2.setGraph("src/main/java/files/player.txt");
+            if(!jRadioButtonMenuItem2.isSelected())
+                fSMGraph3.setGraph("src/main/java/files/boss1.txt");
+            else
+                fSMGraph3.setGraph("src/main/java/files/boss2.txt");
+            fSMGraph2.repaint();
+            fSMGraph3.repaint();
+            fSMGraph2.revalidate();
+            fSMGraph3.revalidate();
+            jButton2.setEnabled(true);
+            count = 0;
+            //fSMGraph3.setGraph(null);
+            cont.set_lb(left_bg1);
+            cont.set_rb(right_bg1);
+        } catch (IOException ex) {
+            Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,26 +357,37 @@ public class Ct_Frame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ct_Frame().setVisible(true);
+                try {
+                    new Ct_Frame().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Ct_Frame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
     private Controller cont;
     private int count;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.CTGUI.background background2;
     private com.CTGUI.FSMGraph fSMGraph1;
     private com.CTGUI.FSMGraph fSMGraph2;
     private com.CTGUI.FSMGraph fSMGraph3;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private com.CTGUI.left_bg left_bg1;
-    private com.CTGUI.left_player left_player1;
-    private com.CTGUI.ResultBoard resultBoard2;
+    private com.CTGUI.ResultBoard resultBoard1;
     private com.CTGUI.right_bg right_bg1;
-    private com.CTGUI.right_player right_player1;
     private com.CTGUI.ScoreBoard scoreBoard2;
     // End of variables declaration//GEN-END:variables
 }

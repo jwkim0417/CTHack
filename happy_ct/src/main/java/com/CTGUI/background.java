@@ -12,34 +12,33 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
 import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 /**
  *
  * @author kimsj0302
  */
-public class left_bg extends JPanel {
-    private BufferedImage image,player,C,D;
-    public left_bg(){
+public class background extends JPanel {
+    private BufferedImage image;
+    Integer x,y;
+    public background(){
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        setOpaque(false);
-    }
-    
-    public void setperson() throws IOException{
-        image=ImageIO.read(new File("src/main/java/images/player.png"));
-    }
-    public void setC() throws IOException{
-        image=ImageIO.read(new File("src/main/java/images/money.png"));
-    }
-    public void setD() throws IOException{
-        image=ImageIO.read(new File("src/main/java/images/empty_l.png"));
+        setBackground(new Color(0,0,0,0));
     }
     @Override
     protected void paintComponent(Graphics g) {
+        
+        try {
+          image = ImageIO.read(new File("src/main/java/images/bg.png"));
+       } catch (IOException ex) {
+           return;
+       }
+
         super.paintComponent(g);
-        g.drawImage(image, 0,0, null);
+        g.drawImage(image, 0, 0, null);
     }
+    
 }
